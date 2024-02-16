@@ -45,7 +45,7 @@ define(['N/log', 'N/search'],
                         sublistId: 'item',
                         fieldId: 'custcol_fb_mhi_item_weight',
                         line: i,
-                        value: itemweight
+                        value: parseFloat(itemweight)
                     });
                   
                     //Getting item quantity 
