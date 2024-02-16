@@ -55,6 +55,14 @@ define(['N/log', 'N/search'],
                         line: i
                     });
 
+                    //Setting order line item weight total (Custom Column)
+                    rec.setSublistValue({
+                        sublistId: 'item',
+                        fieldId: 'custcol_mhi_total_item_weight',
+                        line: i,
+                        value: parseFloat(itemweight * qty)
+                    });
+
                     //Running total of order weight
                     totalWeight += parseFloat(itemweight * qty);
                 }
