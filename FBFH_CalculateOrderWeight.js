@@ -31,6 +31,14 @@ define(['N/log', 'N/search'],
                     });
                     log.debug(itemID);
 
+                    //Setting Line Item Location
+                    rec.setSublistValue({
+                        sublistId: 'item',
+                        fieldId: 'location',
+                        line: i,
+                        value: 1
+                    });
+
                     //Getting item card weight
                     let itemweight_kvp = search.lookupFields({
                         type: search.Type.ITEM,
