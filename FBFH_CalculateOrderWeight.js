@@ -4,8 +4,9 @@
  */
 
 //Start of script
-//Encapsulating Log fucntion
+//SuiteScript Define fucntion and importing NetSuite modules
 define(['N/log', 'N/search'],
+    //SuiteScript entry point function
     function(log, search) {
         //beforeSubmit function
         function beforeSubmit(context) {
