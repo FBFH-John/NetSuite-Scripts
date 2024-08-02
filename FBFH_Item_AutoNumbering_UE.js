@@ -11,7 +11,7 @@ define(['N/log', 'N/search', 'N/runtime', 'N/record'],
     function(log, search, runtime, record) {
        
        //beforeLoad function
-        function beforeLoad(context) {
+        /* function beforeLoad(context) {
             
             // Exiting script if context is not "Create" or "Copy"
             if (context.type !== context.UserEventType.CREATE && context.type !== context.UserEventType.COPY) return;
@@ -21,7 +21,7 @@ define(['N/log', 'N/search', 'N/runtime', 'N/record'],
 
             //Setting item ID default value
             currentRecord.setValue('itemid', 'To Be Generated');
-        }       
+        }       */
         //beforeSubmit function
        function beforeSubmit(context) {
            
@@ -121,6 +121,6 @@ define(['N/log', 'N/search', 'N/runtime', 'N/record'],
        // SuiteScript entry point function
        return {
            beforeSubmit: beforeSubmit,
-           beforeLoad : beforeLoad
+           //beforeLoad : beforeLoad
        };
     });
