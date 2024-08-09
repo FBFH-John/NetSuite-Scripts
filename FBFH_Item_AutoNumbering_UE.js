@@ -24,11 +24,14 @@ define(['N/log', 'N/search', 'N/runtime', 'N/record'],
 
                     //Calling itemAutoNumber function - Finds the next item number based on class
                     itemAutoNumber(currentRecord);
-
                 }
+                log.debug("test", currentRecord.type)
+                //Calling itemAutoNumber function if the record event is "Create" or "Copy" 
+                if (currentRecord.type == record.Type.INVENTORY_ITEM || currentRecord.type == record.Type.LOT_NUMBERED_INVENTORY_ITEM) {
 
-                //Calling itemStandardCosting - Sets standarding costing for donated items
-                itemStandardCosting(currentRecord);
+                    //Calling itemStandardCosting - Sets standarding costing for donated items
+                    itemStandardCosting(currentRecord);
+                }
 
                 //Returning function
                 return;
