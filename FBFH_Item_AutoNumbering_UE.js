@@ -12,11 +12,14 @@ define(['N/log', 'N/search', 'N/runtime', 'N/record'],
         
         //beforeSubmit function
        function beforeSubmit(context) {
-           
+
+           //Begining script debug log
+           log.debug("---Begin - FBFH_Item_AutoNumbering Script - Begin---", "---Begin - FBFH_Item_AutoNumbering Script - Begin---");
+
            //Try catch logging
            try {
 
-                //Setting current record object via context module
+                //Setting new record as current record object via context module
                 var currentRecord = context.newRecord;
 
                 //Calling itemAutoNumber function if the record event is "Create" or "Copy" 
@@ -25,14 +28,17 @@ define(['N/log', 'N/search', 'N/runtime', 'N/record'],
                     //Calling itemAutoNumber function - Finds the next item number based on class
                     itemAutoNumber(currentRecord);
                 }
-                log.debug("test", currentRecord.type)
-                //Calling itemAutoNumber function if the record event is "Create" or "Copy" 
+                
+                //Calling itemStandardCosting function if the record event is "Create" or "Copy" 
                 if (currentRecord.type == record.Type.INVENTORY_ITEM || currentRecord.type == record.Type.LOT_NUMBERED_INVENTORY_ITEM) {
 
                     //Calling itemStandardCosting - Sets standarding costing for donated items
                     itemStandardCosting(currentRecord);
                 }
 
+                //Ending Script debug log
+                log.debug("---End FBFH_Item_AutoNumbering Script End---", "---End - FBFH_Item_AutoNumbering Script - End---");
+                
                 //Returning function
                 return;
     
@@ -48,6 +54,10 @@ define(['N/log', 'N/search', 'N/runtime', 'N/record'],
        function itemStandardCosting (currentRecord) {
             //Getting Class from runtime record
             var itemClassID = currentRecord.getValue('class');
+
+            //Begining script debug log
+           log.debug("---Begin - FBFH_Item_AutoNumberinf Script / itemStandardCosting - Begin---", "---Begin - FBFH_Item_AutoNumberinf Script / itemStandardCosting - Begin---");
+
 
             //Chwcking to see if record class is a donated class
             if (itemClassID == 2 || itemClassID == 26) {
@@ -122,15 +132,23 @@ define(['N/log', 'N/search', 'N/runtime', 'N/record'],
                 }
 
             }
-        
+            //Ending script debug log
+            log.debug("---End - FBFH_Item_AutoNumberinf Script / itemStandardCosting - End---", "---End - FBFH_Item_AutoNumberinf Script / itemStandardCosting - End---");
+
             //Returning function
             return;
         }
 
        function itemAutoNumber (currentRecord) {
 
+            //Beginning script log message
+            log.debug("---Begin - FBFH_Item_AutoNumberinf Script / itemAutoNumber - Begin---", "---Begin - FBFH_Item_AutoNumberinf Script / itemAutoNumber - Begin---");
+
             //Getting Class from runtime record
             var newItemClassID = currentRecord.getValue('class');
+
+            //Debug log: newItemClassID
+            log.debug("Function: itemAutoNumber", "newItemClassID:" + newItemClassID);
 
             //Searching for item number prefix based on newItemClassID
             var tempSearchObj = search.lookupFields({
@@ -140,6 +158,9 @@ define(['N/log', 'N/search', 'N/runtime', 'N/record'],
             });
             //Grabbing newItemNumPrefix from tempSearchObj
             var newItemNumPrefix = tempSearchObj["custrecord_fbfh_item_num_prefix"];
+
+            //Debug log: newItemNumPrefix
+            log.debug("Function: itemAutoNumber", "newItemNumPrefix:" + newItemNumPrefix);
             
             //Getting item number suffix from class record
             var tempSearchObj = search.lookupFields({
@@ -149,6 +170,9 @@ define(['N/log', 'N/search', 'N/runtime', 'N/record'],
             });
             //Grabbing newItemNumLength from tempSearchObj
             var newItemNumLength = tempSearchObj["custrecord_fbfh_item_num_length"];
+
+            //Debug log: newItemNumLength
+            log.debug("Function: itemAutoNumber", "newItemNumLength:" + newItemNumLength);
     
             //Validating needed inputs before find next item num in sequence
             if ((!newItemClassID) || (!newItemNumPrefix)) {
@@ -201,11 +225,15 @@ define(['N/log', 'N/search', 'N/runtime', 'N/record'],
                     }
                 }
             });
-    
-            //Setting new Item Number on current record
-            log.debug("new item id",newItemNumber);
+
+            //Debug log: newItemNumLength
+            log.debug("Function: itemAutoNumber", "newItemNumber:" + newItemNumber);
+
+            //Setting the itemid field on the new record 
             currentRecord.setValue('itemid', newItemNumber); 
 
+            //Ending script log message
+            log.debug("---End - FBFH_Item_AutoNumberinf Script / itemAutoNumber - End---", "---End - FBFH_Item_AutoNumberinf Script / itemAutoNumber - End---");
        }
 
        function setITemIDTBD (currentRecord) {
