@@ -190,7 +190,7 @@ define(['N/log', 'N/search', 'N/runtime', 'N/record'],
             var maxItemNumSearchObj = search.create({
                 type: 'item',
                 filters: [
-                ['name', 'startswith', newItemNumPrefix]
+                ['nameinternal', 'startswith', newItemNumPrefix]
                 ],
                 columns: [
                 search.createColumn({
