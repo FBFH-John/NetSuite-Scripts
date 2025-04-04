@@ -200,6 +200,7 @@ define(['N/log', 'N/search', 'N/runtime', 'N/record'],
                 ]
             });
             
+
             //Grabbing search results from search object
             maxItemNumSearchObj.run().each(function (result) {
                 
@@ -225,6 +226,45 @@ define(['N/log', 'N/search', 'N/runtime', 'N/record'],
                     }
                 }
             });
+
+            //Looping until a good item number is found
+            var loopflag = 1;
+
+            while (loopflag === 1){
+
+                //Debug log: newItemNumLength
+                log.debug("Function: itemAutoNumber - Check loop", "newItemNumber:" + newItemNumber);
+
+                //Checking to see if item number is availble
+                //Creating search object to find the curent max item number 
+                var checkItemNumSearchObj = search.create({
+                    type: 'item',
+                    filters: [
+                    ['nameinternal', 'is', newItemNumber]
+                    ],
+                    columns: [
+                    search.createColumn({
+                        name: 'itemid'
+                    })
+                    ]
+                })
+
+                //Grabbing result count to see if result set is empty
+                var checkItemNumSearchResult = checkItemNumSearchObj.runPaged().count;
+
+                //Checking if result set is empty
+                if (checkItemNumSearchResult > 0) {
+
+                    //Adding 1 to newItemNumber abd looping to see if this a valid id number 
+                    newItemNumber = '' + parseInt(newItemNumber) + 1;
+
+                }else{
+
+                    //Breaking loop if empty
+                    loopflag = 2;
+                }
+
+            };
 
             //Debug log: newItemNumLength
             log.debug("Function: itemAutoNumber", "newItemNumber:" + newItemNumber);
